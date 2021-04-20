@@ -24,10 +24,7 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.exp
-*.ilk
-*.lib
-*.pdb
+*.dll
 
 # Fortran module files
 *.mod
@@ -49,5 +46,8 @@
 /Release
 /Debug
 /build
+/dll
+!/build/*
+!/dll/*
 
 # End of https://www.toptal.com/developers/gitignore/api/c++
