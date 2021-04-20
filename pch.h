@@ -13,6 +13,10 @@
 #include "utility/IUnityGraphics.h"
 #include "utility/IUnityGraphicsD3D11.h"
 
+#include "utility/IUnrealInterface.h"
+#include "utility/IUnrealGraphics.h"
+#include "utility/IUnrealGraphicsD3D11.h"
+
 #include "sources/Debug.h"
 #include "sources/Message.h"
 #include "sources/WindowManager.h"

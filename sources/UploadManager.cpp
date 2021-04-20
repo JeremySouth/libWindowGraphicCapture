@@ -6,6 +6,7 @@
 #include "WindowManager.h"
 #include "Window.h"
 #include "Unity.h"
+#include "Unreal.h"
 #include "Cursor.h"
 
 #pragma comment(lib, "d3d11.lib")
@@ -40,10 +41,18 @@ UploadManager::~UploadManager()
 void UploadManager::CreateDevice()
 {
     ComPtr<IDXGIDevice1> dxgiDevice;
+#ifdef _UNITY
     if (FAILED(GetUnityDevice()->QueryInterface(IID_PPV_ARGS(&dxgiDevice)))) {
         DebugLog::Error(__FUNCTION__, " => QueryInterface from IUnityGraphicsD3D11 to IDXGIDevice1 failed.");
         return;
     }
+#endif //_UNITY
+#ifdef _UNREAL
+    if (FAILED(GetUnrealDevice()->QueryInterface(IID_PPV_ARGS(&dxgiDevice)))) {
+        DebugLog::Error(__FUNCTION__, " => QueryInterface from IUnrealGraphicsD3D11 to IDXGIDevice1 failed.");
+        return;
+    }
+#endif //_UNREAL
 
     ComPtr<IDXGIAdapter> dxgiAdapter;
     if (FAILED(dxgiDevice->GetAdapter(&dxgiAdapter))) {

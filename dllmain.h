@@ -1,11 +1,14 @@
 #pragma once
 /*
+* Copyright (c) 2021
+* Immersivecast, All Rights Reserved.
+*
 * @file	dllmain.h / cpp
 *
 * @brief DLL, Window graphic capture
 * 
 *
-* @author	Nam Seung-in (namsikie@gmail.com)
+* @author	Nam Seung-in (jeremy.nam@immersivecast.com)
 * @version	1.0
 * @date		2021.4.7
 * @note
@@ -19,8 +22,15 @@
 extern "C"
 {
 	//Unity Plugin
+#ifdef _UNITY
 	INTERFACE_EXPORT void INTERFACE_API UnityPluginLoad(IUnityInterfaces* unityInterfaces);
 	INTERFACE_EXPORT void INTERFACE_API UnityPluginUnload();
+	INTERFACE_EXPORT UnityRenderingEvent INTERFACE_API GetRenderEventFunc();
+#endif //_UNITY
+#ifdef _UNREAL
+	INTERFACE_EXPORT bool INTERFACE_API UnrealDeviceSetting(ID3D11Device* unrealDevice);
+	INTERFACE_EXPORT UnrealRenderingEvent INTERFACE_API GetRenderEventFunc();
+#endif //_UNREAL
 
 	//Module instance
 	INTERFACE_EXPORT void INTERFACE_API CreateModule();
@@ -30,7 +40,6 @@ extern "C"
 	//Render
 	void INTERFACE_API OnRenderEvent(int id);
 	void INTERFACE_API OnGraphicsDeviceEvent(UnityGfxDeviceEventType event);
-	INTERFACE_EXPORT UnityRenderingEvent INTERFACE_API GetRenderEventFunc();
 
 	//Process
 	INTERFACE_EXPORT void INTERFACE_API Update();

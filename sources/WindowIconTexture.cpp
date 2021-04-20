@@ -4,6 +4,7 @@
 #include "WindowManager.h"
 #include "UploadManager.h"
 #include "Unity.h"
+#include "Unreal.h"
 #include "Message.h"
 
 using namespace Microsoft::WRL;
@@ -198,6 +199,7 @@ bool IconTexture::RenderOnce()
     std::lock_guard<std::mutex> lock(sharedTextureMutex_);
 
     ComPtr<ID3D11DeviceContext> context;
+#ifdef _UNITY
     GetUnityDevice()->GetImmediateContext(&context);
 
     ComPtr<ID3D11Texture2D> texture;
@@ -206,6 +208,17 @@ bool IconTexture::RenderOnce()
         DebugLog::Error(__FUNCTION__, " => OpenSharedResource() failed.");
         return false;
     }
+#endif //_UNITY
+#ifdef _UNREAL
+    GetUnrealDevice()->GetImmediateContext(&context);
+
+    ComPtr<ID3D11Texture2D> texture;
+    if (FAILED(GetUnrealDevice()->OpenSharedResource(sharedHandle_, __uuidof(ID3D11Texture2D), &texture)))
+    {
+        DebugLog::Error(__FUNCTION__, " => OpenSharedResource() failed.");
+        return false;
+    }
+#endif //_UNREAL
 
     context->CopyResource(unityTexture_.load(), texture.Get());
 

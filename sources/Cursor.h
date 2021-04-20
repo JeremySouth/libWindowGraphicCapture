@@ -39,7 +39,7 @@ private:
 
     ThreadLoop threadLoop_;
 
-    std::atomic<ID3D11Texture2D*> unityTexture_ = nullptr;
+    std::atomic<ID3D11Texture2D*> engineTexture_ = nullptr;
     Microsoft::WRL::ComPtr<ID3D11Texture2D> sharedTexture_;
     HANDLE sharedHandle_;
     std::mutex sharedTextureMutex_;

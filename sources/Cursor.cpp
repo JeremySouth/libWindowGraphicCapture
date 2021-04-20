@@ -2,6 +2,7 @@
 #include "Cursor.h"
 #include "WindowManager.h"
 #include "Unity.h"
+#include "Unreal.h"
 #include "Message.h"
 
 using namespace Microsoft::WRL;
@@ -82,13 +83,13 @@ bool Cursor::HasUploaded() const
 
 void Cursor::SetUnityTexturePtr(ID3D11Texture2D* ptr)
 {
-    unityTexture_ = ptr;
+    engineTexture_ = ptr;
 }
 
 
 ID3D11Texture2D* Cursor::GetUnityTexturePtr() const
 {
-    return unityTexture_;
+    return engineTexture_;
 }
 
 
@@ -252,11 +253,11 @@ bool Cursor::Upload()
 {
     if (!hasCaptured_) return false;
 
-    if (!unityTexture_.load() || buffer_.Empty()) return false;
+    if (!engineTexture_.load() || buffer_.Empty()) return false;
 
     {
         D3D11_TEXTURE2D_DESC desc;
-        unityTexture_.load()->GetDesc(&desc);
+        engineTexture_.load()->GetDesc(&desc);
         if (desc.Width != GetWidth() || desc.Height != GetHeight())
         {
             DebugLog::Error(__FUNCTION__, " => Texture size is wrong.");
@@ -269,7 +270,7 @@ bool Cursor::Upload()
 
     std::lock_guard<std::mutex> lock(sharedTextureMutex_);
 
-    sharedTexture_ = uploader->CreateCompatibleSharedTexture(unityTexture_.load());
+    sharedTexture_ = uploader->CreateCompatibleSharedTexture(engineTexture_.load());
     if (!sharedTexture_)
     {
         DebugLog::Error(__FUNCTION__, " => Shared texture is null.");
@@ -303,11 +304,12 @@ bool Cursor::Render()
 {
     if (!hasCaptured_) return false;
 
-    if (!unityTexture_.load() || !sharedTexture_ || !sharedHandle_) return false;
+    if (!engineTexture_.load() || !sharedTexture_ || !sharedHandle_) return false;
 
     std::lock_guard<std::mutex> lock(sharedTextureMutex_);
 
     ComPtr<ID3D11DeviceContext> context;
+#ifdef _UNITY
     GetUnityDevice()->GetImmediateContext(&context);
 
     ComPtr<ID3D11Texture2D> texture;
@@ -316,8 +318,20 @@ bool Cursor::Render()
         DebugLog::Error(__FUNCTION__, " => OpenSharedResource() failed.");
         return false;
     }
+    context->CopyResource(engineTexture_.load(), texture.Get());
 
-    context->CopyResource(unityTexture_.load(), texture.Get());
+#endif //_UNITY
+#ifdef _UNREAL
+    GetUnrealDevice()->GetImmediateContext(&context);
+
+    ComPtr<ID3D11Texture2D> texture;
+    if (FAILED(GetUnrealDevice()->OpenSharedResource(sharedHandle_, __uuidof(ID3D11Texture2D), &texture)))
+    {
+        DebugLog::Error(__FUNCTION__, " => OpenSharedResource() failed.");
+        return false;
+    }
+    context->CopyResource(engineTexture_.load(), texture.Get());
+#endif //_UNREAL
 
     MessageManager::Get().Add({ MessageType::CursorCaptured, -1, nullptr });
 

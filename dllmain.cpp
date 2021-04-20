@@ -1,7 +1,13 @@
 ﻿#include "pch.h"
 #include "dllmain.h"
 
+
+#ifdef _UNITY
 IUnityInterfaces* g_unity = nullptr;
+#endif //_UNITY
+#ifdef _UNREAL
+bool SetUnrealDevice(ID3D11Device* d3dDevice);
+#endif //_UNREAL
 
 static bool _isActiveModule = false;
 
@@ -65,6 +71,7 @@ void INTERFACE_API OnGraphicsDeviceEvent(UnityGfxDeviceEventType event)
     }
 }
 
+#ifdef _UNITY
 INTERFACE_EXPORT void INTERFACE_API UnityPluginLoad(IUnityInterfaces* unityInterfaces)
 {
     g_unity = unityInterfaces;
@@ -78,6 +85,14 @@ INTERFACE_EXPORT void INTERFACE_API UnityPluginUnload()
     unityGraphics->UnregisterDeviceEventCallback(OnGraphicsDeviceEvent);
     g_unity = nullptr;
 }
+#endif //_UNITY
+
+#ifdef _UNREAL
+INTERFACE_EXPORT bool INTERFACE_API UnrealDeviceSetting(ID3D11Device* unrealDevice)
+{
+    return SetUnrealDevice(unrealDevice);
+}
+#endif //_UNREAL
 
 INTERFACE_EXPORT void INTERFACE_API SetDebugMode(DebugLog::Mode mode)
 {

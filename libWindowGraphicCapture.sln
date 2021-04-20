@@ -11,16 +11,28 @@ Global
 		Debug|x86 = Debug|x86
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
+		Unreal_Debug|x64 = Unreal_Debug|x64
+		Unreal_Debug|x86 = Unreal_Debug|x86
+		Unreal_Release|x64 = Unreal_Release|x64
+		Unreal_Release|x86 = Unreal_Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{427BA580-B08F-483D-A8BF-F316B5554964}.Debug|x64.ActiveCfg = Debug|x64
-		{427BA580-B08F-483D-A8BF-F316B5554964}.Debug|x64.Build.0 = Debug|x64
-		{427BA580-B08F-483D-A8BF-F316B5554964}.Debug|x86.ActiveCfg = Debug|Win32
-		{427BA580-B08F-483D-A8BF-F316B5554964}.Debug|x86.Build.0 = Debug|Win32
-		{427BA580-B08F-483D-A8BF-F316B5554964}.Release|x64.ActiveCfg = Release|x64
-		{427BA580-B08F-483D-A8BF-F316B5554964}.Release|x64.Build.0 = Release|x64
-		{427BA580-B08F-483D-A8BF-F316B5554964}.Release|x86.ActiveCfg = Release|Win32
-		{427BA580-B08F-483D-A8BF-F316B5554964}.Release|x86.Build.0 = Release|Win32
+		{427BA580-B08F-483D-A8BF-F316B5554964}.Debug|x64.ActiveCfg = Unity_Debug|x64
+		{427BA580-B08F-483D-A8BF-F316B5554964}.Debug|x64.Build.0 = Unity_Debug|x64
+		{427BA580-B08F-483D-A8BF-F316B5554964}.Debug|x86.ActiveCfg = Unity_Debug|Win32
+		{427BA580-B08F-483D-A8BF-F316B5554964}.Debug|x86.Build.0 = Unity_Debug|Win32
+		{427BA580-B08F-483D-A8BF-F316B5554964}.Release|x64.ActiveCfg = Unity_Release|x64
+		{427BA580-B08F-483D-A8BF-F316B5554964}.Release|x64.Build.0 = Unity_Release|x64
+		{427BA580-B08F-483D-A8BF-F316B5554964}.Release|x86.ActiveCfg = Unity_Release|Win32
+		{427BA580-B08F-483D-A8BF-F316B5554964}.Release|x86.Build.0 = Unity_Release|Win32
+		{427BA580-B08F-483D-A8BF-F316B5554964}.Unreal_Debug|x64.ActiveCfg = Unreal_Debug|x64
+		{427BA580-B08F-483D-A8BF-F316B5554964}.Unreal_Debug|x64.Build.0 = Unreal_Debug|x64
+		{427BA580-B08F-483D-A8BF-F316B5554964}.Unreal_Debug|x86.ActiveCfg = Unreal_Debug|Win32
+		{427BA580-B08F-483D-A8BF-F316B5554964}.Unreal_Debug|x86.Build.0 = Unreal_Debug|Win32
+		{427BA580-B08F-483D-A8BF-F316B5554964}.Unreal_Release|x64.ActiveCfg = Unreal_Release|x64
+		{427BA580-B08F-483D-A8BF-F316B5554964}.Unreal_Release|x64.Build.0 = Unreal_Release|x64
+		{427BA580-B08F-483D-A8BF-F316B5554964}.Unreal_Release|x86.ActiveCfg = Unreal_Release|Win32
+		{427BA580-B08F-483D-A8BF-F316B5554964}.Unreal_Release|x86.Build.0 = Unreal_Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
